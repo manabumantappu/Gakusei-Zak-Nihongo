@@ -142,15 +142,16 @@
   <ul id="listPengumuman"></ul>
 </section>
 
-<section class="card">
+<section class="card guru-only">
   <h2>📄 Materi PDF</h2>
 
-  <input id="pdfJudul" placeholder="Judul PDF (contoh: Modul JLPT N4)">
-  <input id="pdfLink" placeholder="Link PDF (Drive / lokal / hosting)">
-  <button onclick="tambahPDF()">Tambah PDF</button>
+  <!-- Upload PDF (Guru) -->
+  <input type="file" id="pdfFile" accept="application/pdf">
+  <button onclick="uploadPDF()">⬆️ Upload PDF</button>
 
   <ul id="listPDF"></ul>
 </section>
+
    
 <section class="card">
   <h2>💾 Backup & Restore Data</h2>
