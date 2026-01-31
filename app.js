@@ -221,6 +221,61 @@ function hapusPengumuman(i){
     renderPengumuman();
   }
 }
+function backupData(){
+  const data = {
+    siswa: JSON.parse(localStorage.getItem("siswa")),
+    jadwal: JSON.parse(localStorage.getItem("jadwal")) || [],
+    materi: JSON.parse(localStorage.getItem("materi")) || [],
+    kursus: JSON.parse(localStorage.getItem("kursus")) || [],
+    pengumuman: JSON.parse(localStorage.getItem("pengumuman")) || [],
+    pdf: JSON.parse(localStorage.getItem("pdf")) || []
+  };
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "backup-siswa-bahasa-jepang.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+function restoreData(){
+  const fileInput = document.getElementById("restoreFile");
+  const file = fileInput.files[0];
+
+  if(!file){
+    alert("Pilih file backup terlebih dahulu");
+    return;
+  }
+
+  if(!confirm("Restore akan mengganti SEMUA data lama. Lanjutkan?")){
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const data = JSON.parse(e.target.result);
+
+      localStorage.setItem("siswa", JSON.stringify(data.siswa || {}));
+      localStorage.setItem("jadwal", JSON.stringify(data.jadwal || []));
+      localStorage.setItem("materi", JSON.stringify(data.materi || []));
+      localStorage.setItem("kursus", JSON.stringify(data.kursus || []));
+      localStorage.setItem("pengumuman", JSON.stringify(data.pengumuman || []));
+      localStorage.setItem("pdf", JSON.stringify(data.pdf || []));
+
+      alert("✅ Restore berhasil. Aplikasi akan dimuat ulang.");
+      location.reload();
+
+    }catch(err){
+      alert("❌ File backup tidak valid");
+    }
+  };
+  reader.readAsText(file);
+}
 
 /* =========================
    INIT
