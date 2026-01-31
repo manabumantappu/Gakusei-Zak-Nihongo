@@ -356,6 +356,34 @@ function logout(){
   localStorage.removeItem("loginUser");
   location.reload();
 }
+/* =========================
+   FIREBASE Rules Firestore
+========================= */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /pengumuman/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.auth.token.role == "guru";
+    }
+  }
+}
+/* =========================
+   FIREBASE Rules Storage
+========================= */
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    match /pdf/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.auth.token.role == "guru";
+    }
+  }
+}
 
 /* =========================
    INIT
