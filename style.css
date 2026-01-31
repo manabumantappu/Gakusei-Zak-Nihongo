@@ -124,8 +124,8 @@ button{
 }
 
 .logo{
-  width:90px;           /* ⬅️ logo diperbesar */
-  height:90px;
+  width:110px;           /* ⬅️ logo diperbesar */
+  height:110px;
   object-fit:contain;
   display:block;
 }
