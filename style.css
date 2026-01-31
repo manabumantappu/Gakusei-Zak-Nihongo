@@ -103,26 +103,27 @@ header{
 .header-inner{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:16px;
   max-width:900px;
   margin:auto;
 }
 
+.logo-wrap{
+  width:90px;              /* ⬅️ ukuran lingkaran */
+  height:90px;
+  background:#fff;         /* ⬅️ background putih */
+  border-radius:50%;       /* ⬅️ lingkaran sempurna */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 10px rgba(0,0,0,.2); /* opsional, biar elegan */
+}
+
 .logo{
-  width:60px;
-  height:60px;
+  width:70px;              /* ⬅️ ukuran logo */
+  height:70px;
   object-fit:contain;
-
-  background:transparent; /* ✅ penting */
-  padding:0;              /* ✅ hapus padding */
-  border-radius:0;        /* ✅ logo bulat sudah dari file */
 }
-.logo-box{
-  background:transparent;
-  padding:0;
-  border-radius:0;
-}
-
 
 .header-text h1{
   margin:0;
