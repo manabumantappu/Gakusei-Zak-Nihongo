@@ -7,25 +7,26 @@ let kursusList = JSON.parse(localStorage.getItem("kursus")) || [];
 let pengumumanList = JSON.parse(localStorage.getItem("pengumuman")) || [];
 let pdfList = JSON.parse(localStorage.getItem("pdf")) || [];
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+// ===============================
+// FIREBASE INIT (FINAL & AMAN)
+// ===============================
+const firebaseConfig = {
+  apiKey: "AIzaSyC6hSNmpkCxVZNdko_BXC1VW7OV7XH2yWw",
+  authDomain: "zak-nihongo-app.firebaseapp.com",
+  projectId: "zak-nihongo-app",
+  storageBucket: "zak-nihongo-app.appspot.com",
+  messagingSenderId: "853006734673",
+  appId: "1:853006734673:web:6b4d1a3207b0544650af70"
+};
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyC6hSNmpkCxVZNdko_BXC1VW7OV7XH2yWw",
-    authDomain: "zak-nihongo-app.firebaseapp.com",
-    projectId: "zak-nihongo-app",
-    storageBucket: "zak-nihongo-app.firebasestorage.app",
-    messagingSenderId: "853006734673",
-    appId: "1:853006734673:web:6b4d1a3207b0544650af70"
-  };
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
+// Services
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+
 
 /* =========================
    ELEMENTS
