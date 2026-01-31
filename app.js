@@ -1,5 +1,6 @@
 let jadwal = JSON.parse(localStorage.getItem("jadwal")) || [];
 let materi = JSON.parse(localStorage.getItem("materi")) || [];
+let kursus = JSON.parse(localStorage.getItem("kursus")) || [];
 
 function simpanSiswa(){
   const siswa = {
