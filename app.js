@@ -84,6 +84,20 @@ function tambahKursus(){
   kursusPengajar.value = "";
   kursusKelas.value = "";
 }
+function renderKursus(){
+  listKursus.innerHTML = "";
+  kursus.forEach((k,i)=>{
+    listKursus.innerHTML += `
+      <li>
+        <strong>${k.nama}</strong><br>
+        📅 ${k.tanggal} | ⏰ ${k.jam}<br>
+        👨‍🏫 ${k.pengajar || "-"}<br>
+        🏫 ${k.kelas || "-"}
+      </li>
+    `;
+  });
+}
 
+renderKursus();
 renderJadwal();
 renderMateri();
