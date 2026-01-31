@@ -318,6 +318,7 @@ function renderDashboard(){
 /* =========================
    INIT
 ========================= */
+renderDashboard();
 renderPengumuman();
 renderPDF();
 renderJadwal();
