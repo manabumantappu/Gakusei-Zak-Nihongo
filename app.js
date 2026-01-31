@@ -276,6 +276,44 @@ function restoreData(){
   };
   reader.readAsText(file);
 }
+function renderDashboard(){
+  /* === DATA SISWA === */
+  const siswa = JSON.parse(localStorage.getItem("siswa")) || {};
+  dashNama.innerText = siswa.nama || "-";
+  dashLevel.innerText = siswa.level || "-";
+  dashTarget.innerText = siswa.target || "-";
+
+  /* === PROGRES MATERI === */
+  const total = materiList.length;
+  const selesai = materiList.filter(m => m.status).length;
+  const persen = total ? Math.round((selesai / total) * 100) : 0;
+
+  dashMateriTotal.innerText = total;
+  dashMateriSelesai.innerText = selesai;
+  dashProgress.style.width = persen + "%";
+
+  /* === KURSUS HARI INI === */
+  const today = new Date().toISOString().split("T")[0];
+  const todayCourses = kursusList.filter(k => k.tanggal === today);
+
+  dashKursusHariIni.innerHTML = "";
+  if(todayCourses.length === 0){
+    dashKursusHariIni.innerHTML = "<li>Tidak ada kursus hari ini</li>";
+  }else{
+    todayCourses.forEach(k=>{
+      dashKursusHariIni.innerHTML += `
+        <li>${k.nama} (${k.jam})</li>
+      `;
+    });
+  }
+
+  /* === PENGUMUMAN TERBARU === */
+  if(pengumumanList.length){
+    dashPengumuman.innerText = pengumumanList[0].isi;
+  }else{
+    dashPengumuman.innerText = "Tidak ada pengumuman";
+  }
+}
 
 /* =========================
    INIT
