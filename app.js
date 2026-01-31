@@ -477,6 +477,18 @@ service firebase.storage {
   }
 }
 
+auth.onAuthStateChanged(user=>{
+  if(user){
+    // SUDAH LOGIN
+    loginSection.style.display = "none";
+    appContent.style.display = "block";
+  }else{
+    // BELUM LOGIN
+    loginSection.style.display = "block";
+    appContent.style.display = "none";
+  }
+});
+
 /* =========================
    INIT
 ========================= */
