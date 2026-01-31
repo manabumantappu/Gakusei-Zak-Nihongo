@@ -171,3 +171,6 @@ button{
 #loginSection h2{
   text-align:center;
 }
+.role-siswa .guru-only{
+  display:none;
+}
