@@ -315,6 +315,48 @@ function renderDashboard(){
   }
 }
 
+function loginUser(){
+  const email = loginEmail.value;
+  const password = loginPassword.value;
+
+  if(!email || !password){
+    alert("Email dan password wajib diisi");
+    return;
+  }
+
+  /* =========================
+     MOCK LOGIN (sementara)
+     nanti diganti Firebase
+  ========================= */
+
+  let role = "siswa";
+  if(email.includes("guru")){
+    role = "guru";
+  }
+
+  localStorage.setItem("loginUser", JSON.stringify({
+    email,
+    role
+  }));
+
+  alert("Login berhasil sebagai " + role);
+  afterLogin();
+}
+function afterLogin(){
+  loginSection.style.display = "none";
+
+  const user = JSON.parse(localStorage.getItem("loginUser"));
+  if(!user) return;
+
+  if(user.role === "guru"){
+    document.body.classList.add("role-guru");
+  }
+}
+function logout(){
+  localStorage.removeItem("loginUser");
+  location.reload();
+}
+
 /* =========================
    INIT
 ========================= */
