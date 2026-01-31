@@ -68,3 +68,29 @@ button{
 #dashboard p{
   margin:6px 0;
 }
+header{
+  background:#0f4c81;
+  color:#fff;
+  padding:20px 16px;
+  text-align:center;
+}
+
+.app-title{
+  margin:0;
+  font-size:1.8rem;
+  font-weight:700;
+}
+
+.app-subtitle{
+  margin:6px 0 4px;
+  font-size:1rem;
+  font-weight:500;
+  opacity:0.9;
+}
+
+.app-desc{
+  margin:0;
+  font-size:0.9rem;
+  letter-spacing:1px;
+  opacity:0.85;
+}
