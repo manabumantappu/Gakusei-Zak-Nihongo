@@ -71,6 +71,24 @@
 
   <ul id="listKursus"></ul>
 </section>
+<section class="card">
+  <h2>📢 Pengumuman Guru</h2>
+
+  <textarea id="pengumumanInput" placeholder="Tulis pengumuman atau perubahan jadwal..." rows="3"></textarea>
+  <button onclick="tambahPengumuman()">Kirim Pengumuman</button>
+
+  <ul id="listPengumuman"></ul>
+</section>
+
+<section class="card">
+  <h2>📄 Materi PDF</h2>
+
+  <input id="pdfJudul" placeholder="Judul PDF (contoh: Modul JLPT N4)">
+  <input id="pdfLink" placeholder="Link PDF (Drive / lokal / hosting)">
+  <button onclick="tambahPDF()">Tambah PDF</button>
+
+  <ul id="listPDF"></ul>
+</section>
 
 <script src="app.js"></script>
 </body>
