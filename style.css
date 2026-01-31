@@ -112,10 +112,12 @@ header{
   width:60px;
   height:60px;
   object-fit:contain;
-  border-radius:12px;
-  background:#fff;
-  padding:6px;
+
+  background:transparent; /* ✅ penting */
+  padding:0;              /* ✅ hapus padding */
+  border-radius:0;        /* ✅ logo bulat sudah dari file */
 }
+
 
 .header-text h1{
   margin:0;
