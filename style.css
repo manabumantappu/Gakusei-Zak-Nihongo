@@ -68,12 +68,6 @@ button{
 #dashboard p{
   margin:6px 0;
 }
-header{
-  background:#0f4c81;
-  color:#fff;
-  padding:20px 16px;
-  text-align:center;
-}
 
 .app-title{
   margin:0;
@@ -109,21 +103,29 @@ header{
 }
 
 .logo-wrap{
-  width:90px;              /* ⬅️ ukuran lingkaran */
-  height:90px;
-  background:#fff;         /* ⬅️ background putih */
-  border-radius:50%;       /* ⬅️ lingkaran sempurna */
+  width:96px;
+  height:96px;
+
+  background:#ffffff;
+  border-radius:50%;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 4px 10px rgba(0,0,0,.2); /* opsional, biar elegan */
+
+  overflow:hidden;                 /* 🔑 WAJIB */
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+
+  flex-shrink:0;                   /* biar tidak gepeng */
 }
 
 .logo{
-  width:70px;              /* ⬅️ ukuran logo */
-  height:70px;
+  width:68px;
+  height:68px;
   object-fit:contain;
+  display:block;
 }
+
 
 .header-text h1{
   margin:0;
