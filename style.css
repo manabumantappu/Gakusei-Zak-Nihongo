@@ -98,9 +98,13 @@ button{
   display:flex;
   align-items:center;
   gap:16px;
-  max-width:900px;
-  margin:auto;
+
+  max-width:100%;
+  margin:0;              /* 🔑 PENTING */
+
+  padding-left:12px;     /* jarak aman dari kiri */
 }
+
 
 .logo-wrap{
   width:96px;
