@@ -1,7 +1,37 @@
-let jadwal = JSON.parse(localStorage.getItem("jadwal")) || [];
-let materi = JSON.parse(localStorage.getItem("materi")) || [];
-let kursus = JSON.parse(localStorage.getItem("kursus")) || [];
+/* =========================
+   DATA STORAGE
+========================= */
+let jadwalList = JSON.parse(localStorage.getItem("jadwal")) || [];
+let materiList = JSON.parse(localStorage.getItem("materi")) || [];
+let kursusList = JSON.parse(localStorage.getItem("kursus")) || [];
 
+/* =========================
+   ELEMENTS
+========================= */
+const jadwalInput = document.getElementById("jadwalInput");
+const materiInput = document.getElementById("materiInput");
+const jenis = document.getElementById("jenis");
+
+const nama = document.getElementById("nama");
+const level = document.getElementById("level");
+const target = document.getElementById("target");
+
+const kursusNama = document.getElementById("kursusNama");
+const kursusTanggal = document.getElementById("kursusTanggal");
+const kursusJam = document.getElementById("kursusJam");
+const kursusPengajar = document.getElementById("kursusPengajar");
+const kursusKelas = document.getElementById("kursusKelas");
+
+const listJadwal = document.getElementById("listJadwal");
+const listMateri = document.getElementById("listMateri");
+const listKursus = document.getElementById("listKursus");
+
+const progress = document.getElementById("progress");
+const progresText = document.getElementById("progresText");
+
+/* =========================
+   SISWA
+========================= */
 function simpanSiswa(){
   const siswa = {
     nama: nama.value,
@@ -9,38 +39,51 @@ function simpanSiswa(){
     target: target.value
   };
   localStorage.setItem("siswa", JSON.stringify(siswa));
-  alert("Data siswa tersimpan");
+  alert("✅ Data siswa tersimpan");
 }
 
+/* =========================
+   JADWAL BELAJAR
+========================= */
 function tambahJadwal(){
-  jadwal.push(jadwal.value);
-  localStorage.setItem("jadwal", JSON.stringify(jadwal));
+  if(!jadwalInput.value) return;
+
+  jadwalList.push(jadwalInput.value);
+  localStorage.setItem("jadwal", JSON.stringify(jadwalList));
+  jadwalInput.value = "";
   renderJadwal();
 }
 
 function renderJadwal(){
   listJadwal.innerHTML = "";
-  jadwal.forEach(j => {
+  jadwalList.forEach(j => {
     listJadwal.innerHTML += `<li>${j}</li>`;
   });
 }
 
+/* =========================
+   MATERI BELAJAR
+========================= */
 function tambahMateri(){
-  materi.push({
-    judul: materi.value,
+  if(!materiInput.value) return;
+
+  materiList.push({
+    judul: materiInput.value,
     jenis: jenis.value,
     status: false
   });
-  localStorage.setItem("materi", JSON.stringify(materi));
+
+  localStorage.setItem("materi", JSON.stringify(materiList));
+  materiInput.value = "";
   renderMateri();
 }
 
 function renderMateri(){
   listMateri.innerHTML = "";
-  materi.forEach((m,i)=>{
+  materiList.forEach((m,i)=>{
     listMateri.innerHTML += `
       <li>
-        <input type="checkbox" onchange="toggleMateri(${i})" ${m.status?'checked':''}>
+        <input type="checkbox" onchange="toggleMateri(${i})" ${m.status ? "checked" : ""}>
         ${m.judul} (${m.jenis})
       </li>`;
   });
@@ -48,34 +91,37 @@ function renderMateri(){
 }
 
 function toggleMateri(i){
-  materi[i].status = !materi[i].status;
-  localStorage.setItem("materi", JSON.stringify(materi));
+  materiList[i].status = !materiList[i].status;
+  localStorage.setItem("materi", JSON.stringify(materiList));
   updateProgres();
 }
 
 function updateProgres(){
-  const selesai = materi.filter(m=>m.status).length;
-  const persen = materi.length ? Math.round((selesai/materi.length)*100) : 0;
-  progress.style.width = persen+"%";
+  const selesai = materiList.filter(m=>m.status).length;
+  const persen = materiList.length ? Math.round((selesai / materiList.length) * 100) : 0;
+
+  progress.style.width = persen + "%";
   progresText.innerText = `${persen}% selesai`;
 }
 
+/* =========================
+   JADWAL KURSUS
+========================= */
 function tambahKursus(){
-  const data = {
+  if(!kursusNama.value || !kursusTanggal.value || !kursusJam.value){
+    alert("⚠️ Nama, tanggal, dan jam kursus wajib diisi");
+    return;
+  }
+
+  kursusList.push({
     nama: kursusNama.value,
     tanggal: kursusTanggal.value,
     jam: kursusJam.value,
     pengajar: kursusPengajar.value,
     kelas: kursusKelas.value
-  };
+  });
 
-  if(!data.nama || !data.tanggal || !data.jam){
-    alert("Nama kursus, tanggal, dan jam wajib diisi");
-    return;
-  }
-
-  kursus.push(data);
-  localStorage.setItem("kursus", JSON.stringify(kursus));
+  localStorage.setItem("kursus", JSON.stringify(kursusList));
   renderKursus();
 
   kursusNama.value = "";
@@ -84,9 +130,10 @@ function tambahKursus(){
   kursusPengajar.value = "";
   kursusKelas.value = "";
 }
+
 function renderKursus(){
   listKursus.innerHTML = "";
-  kursus.forEach((k,i)=>{
+  kursusList.forEach((k,i)=>{
     listKursus.innerHTML += `
       <li>
         <strong>${k.nama}</strong><br>
@@ -101,20 +148,8 @@ function renderKursus(){
   });
 }
 
-function reminderHariIni(){
-  const hariIni = new Date().toISOString().split("T")[0];
-  const kursusHariIni = kursus.filter(k => k.tanggal === hariIni);
-
-  if(kursusHariIni.length > 0){
-    let pesan = "📢 Kursus Hari Ini:\n\n";
-    kursusHariIni.forEach(k=>{
-      pesan += `• ${k.nama} (${k.jam})\n`;
-    });
-    alert(pesan);
-  }
-}
 function editKursus(i){
-  const k = kursus[i];
+  const k = kursusList[i];
 
   kursusNama.value = k.nama;
   kursusTanggal.value = k.tanggal;
@@ -122,19 +157,39 @@ function editKursus(i){
   kursusPengajar.value = k.pengajar;
   kursusKelas.value = k.kelas;
 
-  kursus.splice(i,1);
-  localStorage.setItem("kursus", JSON.stringify(kursus));
+  kursusList.splice(i,1);
+  localStorage.setItem("kursus", JSON.stringify(kursusList));
   renderKursus();
 }
+
 function hapusKursus(i){
   if(confirm("Yakin hapus jadwal kursus ini?")){
-    kursus.splice(i,1);
-    localStorage.setItem("kursus", JSON.stringify(kursus));
+    kursusList.splice(i,1);
+    localStorage.setItem("kursus", JSON.stringify(kursusList));
     renderKursus();
   }
 }
 
-reminderHariIni();
-renderKursus();
+/* =========================
+   REMINDER HARI INI
+========================= */
+function reminderHariIni(){
+  const today = new Date().toISOString().split("T")[0];
+  const todayCourses = kursusList.filter(k => k.tanggal === today);
+
+  if(todayCourses.length){
+    let msg = "📢 Kursus Hari Ini:\n\n";
+    todayCourses.forEach(k=>{
+      msg += `• ${k.nama} (${k.jam})\n`;
+    });
+    alert(msg);
+  }
+}
+
+/* =========================
+   INIT
+========================= */
 renderJadwal();
 renderMateri();
+renderKursus();
+reminderHariIni();
