@@ -117,6 +117,11 @@ header{
   padding:0;              /* ✅ hapus padding */
   border-radius:0;        /* ✅ logo bulat sudah dari file */
 }
+.logo-box{
+  background:transparent;
+  padding:0;
+  border-radius:0;
+}
 
 
 .header-text h1{
