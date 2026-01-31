@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aplikasi Siswa Bahasa Jepang</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>📘 Siswa Bahasa Jepang</h1>
+  <p>JLPT • JFT • SSW</p>
+</header>
+
+<section class="card">
+  <h2>👤 Data Siswa</h2>
+  <input id="nama" placeholder="Nama Siswa">
+  <select id="level">
+    <option>JLPT N5</option>
+    <option>JLPT N4</option>
+    <option>JLPT N3</option>
+    <option>JLPT N2</option>
+    <option>JLPT N1</option>
+    <option>JFT-Basic</option>
+    <option>SSW</option>
+  </select>
+  <input id="target" placeholder="Target Ujian (opsional)">
+  <button onclick="simpanSiswa()">Simpan</button>
+</section>
+
+<section class="card">
+  <h2>📅 Jadwal Belajar</h2>
+  <input id="jadwal" placeholder="Contoh: Senin - Kanji N5">
+  <button onclick="tambahJadwal()">Tambah</button>
+  <ul id="listJadwal"></ul>
+</section>
+
+<section class="card">
+  <h2>📚 Materi Belajar</h2>
+  <input id="materi" placeholder="Judul Materi">
+  <select id="jenis">
+    <option>Kosakata</option>
+    <option>Tata Bahasa</option>
+    <option>Kanji</option>
+    <option>Listening</option>
+    <option>Reading</option>
+  </select>
+  <button onclick="tambahMateri()">Tambah</button>
+  <ul id="listMateri"></ul>
+</section>
+
+<section class="card">
+  <h2>📈 Progres Belajar</h2>
+  <p id="progresText">0% selesai</p>
+  <div class="progress-bar">
+    <div id="progress"></div>
+  </div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
