@@ -52,3 +52,7 @@ ul{
   background:#4caf50;
   border-radius:10px;
 }
+li{
+  margin-bottom:12px;
+  line-height:1.4;
+}
