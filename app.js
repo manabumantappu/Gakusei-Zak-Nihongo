@@ -60,5 +60,30 @@ function updateProgres(){
   progresText.innerText = `${persen}% selesai`;
 }
 
+function tambahKursus(){
+  const data = {
+    nama: kursusNama.value,
+    tanggal: kursusTanggal.value,
+    jam: kursusJam.value,
+    pengajar: kursusPengajar.value,
+    kelas: kursusKelas.value
+  };
+
+  if(!data.nama || !data.tanggal || !data.jam){
+    alert("Nama kursus, tanggal, dan jam wajib diisi");
+    return;
+  }
+
+  kursus.push(data);
+  localStorage.setItem("kursus", JSON.stringify(kursus));
+  renderKursus();
+
+  kursusNama.value = "";
+  kursusTanggal.value = "";
+  kursusJam.value = "";
+  kursusPengajar.value = "";
+  kursusKelas.value = "";
+}
+
 renderJadwal();
 renderMateri();
