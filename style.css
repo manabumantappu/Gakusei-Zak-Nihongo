@@ -107,8 +107,8 @@ button{
 
 
 .logo-wrap{
-  width:90px;          /* ⬅️ lingkaran lebih besar */
-  height:90px;
+  width:70px;          /* ⬅️ lingkaran lebih besar */
+  height:70px;
 
   background:#ffffff;
   border-radius:50%;
@@ -124,8 +124,8 @@ button{
 }
 
 .logo{
-  width:130px;           /* ⬅️ logo diperbesar */
-  height:130px;
+  width:140px;           /* ⬅️ logo diperbesar */
+  height:140px;
   object-fit:contain;
   display:block;
 }
