@@ -10,6 +10,21 @@ let pdfList = JSON.parse(localStorage.getItem("pdf")) || [];
 /* =========================
    ELEMENTS
 ========================= */
+const firebaseConfig = {
+  apiKey: "API_KEY_KAMU",
+  authDomain: "PROJECT_ID.firebaseapp.com",
+  projectId: "PROJECT_ID",
+  storageBucket: "PROJECT_ID.appspot.com",
+  messagingSenderId: "XXXX",
+  appId: "XXXX"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+
 const jadwalInput = document.getElementById("jadwalInput");
 const materiInput = document.getElementById("materiInput");
 const jenis = document.getElementById("jenis");
@@ -324,11 +339,88 @@ function loginUser(){
     return;
   }
 
+   function renderPengumuman(){
+  listPengumuman.innerHTML = "";
+
+  db.collection("pengumuman")
+    .orderBy("waktu", "desc")
+    .onSnapshot(snapshot=>{
+      listPengumuman.innerHTML = "";
+      snapshot.forEach(doc=>{
+        const p = doc.data();
+        listPengumuman.innerHTML += `
+          <li>
+            📢 ${p.isi}<br>
+            <small>${p.waktu?.toDate().toLocaleString()}</small>
+          </li>
+        `;
+      });
+    });
+}
+
+function tambahPengumuman(){
+  const isi = pengumumanInput.value;
+  if(!isi) return;
+
+  db.collection("pengumuman").add({
+    isi,
+    waktu: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  pengumumanInput.value = "";
+}
+   
+function uploadPDF(){
+  const file = pdfFile.files[0];
+  if(!file) return;
+
+  const ref = storage.ref("pdf/" + file.name);
+  ref.put(file).then(()=>{
+    ref.getDownloadURL().then(url=>{
+      db.collection("pdf").add({
+        judul: file.name,
+        link: url
+      });
+    });
+  });
+}
+function renderPDF(){
+  listPDF.innerHTML = "";
+
+  db.collection("pdf").onSnapshot(snapshot=>{
+    listPDF.innerHTML = "";
+    snapshot.forEach(doc=>{
+      const p = doc.data();
+      listPDF.innerHTML += `
+        <li>
+          📄 ${p.judul}<br>
+          <a href="${p.link}" target="_blank">⬇️ Unduh PDF</a>
+        </li>
+      `;
+    });
+  });
+}
+
   /* =========================
      MOCK LOGIN (sementara)
      nanti diganti Firebase
   ========================= */
+function loginUser(){
+  const email = loginEmail.value;
+  const password = loginPassword.value;
 
+  auth.signInWithEmailAndPassword(email, password)
+    .then(res=>{
+      const user = res.user;
+      alert("Login berhasil");
+      loginSection.style.display = "none";
+    })
+    .catch(err=>{
+      alert(err.message);
+    });
+}
+
+   
   let role = "siswa";
   if(email.includes("guru")){
     role = "guru";
