@@ -92,12 +92,49 @@ function renderKursus(){
         <strong>${k.nama}</strong><br>
         📅 ${k.tanggal} | ⏰ ${k.jam}<br>
         👨‍🏫 ${k.pengajar || "-"}<br>
-        🏫 ${k.kelas || "-"}
+        🏫 ${k.kelas || "-"}<br><br>
+
+        <button onclick="editKursus(${i})">✏️ Edit</button>
+        <button onclick="hapusKursus(${i})">🗑 Hapus</button>
       </li>
     `;
   });
 }
 
+function reminderHariIni(){
+  const hariIni = new Date().toISOString().split("T")[0];
+  const kursusHariIni = kursus.filter(k => k.tanggal === hariIni);
+
+  if(kursusHariIni.length > 0){
+    let pesan = "📢 Kursus Hari Ini:\n\n";
+    kursusHariIni.forEach(k=>{
+      pesan += `• ${k.nama} (${k.jam})\n`;
+    });
+    alert(pesan);
+  }
+}
+function editKursus(i){
+  const k = kursus[i];
+
+  kursusNama.value = k.nama;
+  kursusTanggal.value = k.tanggal;
+  kursusJam.value = k.jam;
+  kursusPengajar.value = k.pengajar;
+  kursusKelas.value = k.kelas;
+
+  kursus.splice(i,1);
+  localStorage.setItem("kursus", JSON.stringify(kursus));
+  renderKursus();
+}
+function hapusKursus(i){
+  if(confirm("Yakin hapus jadwal kursus ini?")){
+    kursus.splice(i,1);
+    localStorage.setItem("kursus", JSON.stringify(kursus));
+    renderKursus();
+  }
+}
+
+reminderHariIni();
 renderKursus();
 renderJadwal();
 renderMateri();
