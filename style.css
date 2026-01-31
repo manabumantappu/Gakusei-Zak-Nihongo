@@ -1,0 +1,54 @@
+body{
+  font-family: system-ui, sans-serif;
+  background:#f4f6f8;
+  margin:0;
+}
+
+header{
+  background:#0f4c81;
+  color:#fff;
+  padding:16px;
+  text-align:center;
+}
+
+.card{
+  background:#fff;
+  margin:12px;
+  padding:16px;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+input, select, button{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  background:#0f4c81;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+
+ul{
+  padding-left:18px;
+}
+
+.progress-bar{
+  width:100%;
+  background:#ddd;
+  border-radius:10px;
+  height:14px;
+  margin-top:10px;
+}
+
+#progress{
+  height:14px;
+  width:0%;
+  background:#4caf50;
+  border-radius:10px;
+}
