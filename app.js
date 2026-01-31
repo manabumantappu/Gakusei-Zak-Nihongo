@@ -1,12 +1,3 @@
-/* =========================
-   DATA STORAGE
-========================= */
-let jadwalList = JSON.parse(localStorage.getItem("jadwal")) || [];
-let materiList = JSON.parse(localStorage.getItem("materi")) || [];
-let kursusList = JSON.parse(localStorage.getItem("kursus")) || [];
-let pengumumanList = JSON.parse(localStorage.getItem("pengumuman")) || [];
-let pdfList = JSON.parse(localStorage.getItem("pdf")) || [];
-
 // ===============================
 // FIREBASE INIT (FINAL & AMAN)
 // ===============================
@@ -29,22 +20,14 @@ const storage = firebase.storage();
 
 
 /* =========================
-   ELEMENTS
+   DATA STORAGE
 ========================= */
-const firebaseConfig = {
-  apiKey: "API_KEY_KAMU",
-  authDomain: "PROJECT_ID.firebaseapp.com",
-  projectId: "PROJECT_ID",
-  storageBucket: "PROJECT_ID.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
-};
+let jadwalList = JSON.parse(localStorage.getItem("jadwal")) || [];
+let materiList = JSON.parse(localStorage.getItem("materi")) || [];
+let kursusList = JSON.parse(localStorage.getItem("kursus")) || [];
+let pengumumanList = JSON.parse(localStorage.getItem("pengumuman")) || [];
+let pdfList = JSON.parse(localStorage.getItem("pdf")) || [];
 
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
 
 const jadwalInput = document.getElementById("jadwalInput");
 const materiInput = document.getElementById("materiInput");
@@ -379,6 +362,9 @@ function loginUser(){
     });
 }
 
+/* =========================
+   PENGUMUMAN (FIRESTORE)
+========================= */
 function tambahPengumuman(){
   const isi = pengumumanInput.value;
   if(!isi) return;
@@ -390,7 +376,28 @@ function tambahPengumuman(){
 
   pengumumanInput.value = "";
 }
-   
+
+function renderPengumuman(){
+  listPengumuman.innerHTML = "";
+
+  db.collection("pengumuman")
+    .orderBy("waktu","desc")
+    .onSnapshot(snapshot=>{
+      listPengumuman.innerHTML = "";
+      snapshot.forEach(doc=>{
+        const p = doc.data();
+        listPengumuman.innerHTML += `
+          <li>
+            📢 ${p.isi}<br>
+            <small>${p.waktu?.toDate().toLocaleString()}</small>
+          </li>
+        `;
+      });
+    });
+}
+/* =========================
+   PDF (STORAGE)
+========================= */
 function uploadPDF(){
   const file = pdfFile.files[0];
   if(!file) return;
@@ -408,66 +415,44 @@ function uploadPDF(){
 function renderPDF(){
   listPDF.innerHTML = "";
 
-  db.collection("pdf").onSnapshot(snapshot=>{
-    listPDF.innerHTML = "";
-    snapshot.forEach(doc=>{
-      const p = doc.data();
-      listPDF.innerHTML += `
-        <li>
-          📄 ${p.judul}<br>
-          <a href="${p.link}" target="_blank">⬇️ Unduh PDF</a>
-        </li>
-      `;
+  db.collection("pdf")
+    .onSnapshot(snapshot=>{
+      listPDF.innerHTML = "";
+      snapshot.forEach(doc=>{
+        const p = doc.data();
+        listPDF.innerHTML += `
+          <li>
+            📄 ${p.judul}<br>
+            <a href="${p.link}" target="_blank">⬇️ Unduh PDF</a>
+          </li>
+        `;
+      });
     });
-  });
 }
 
-  /* =========================
-     MOCK LOGIN (sementara)
-     nanti diganti Firebase
-  ========================= */
+ /* =========================
+   LOGIN FIREBASE
+========================= */
 function loginUser(){
   const email = loginEmail.value;
   const password = loginPassword.value;
 
+  if(!email || !password){
+    alert("Email dan password wajib diisi");
+    return;
+  }
+
   auth.signInWithEmailAndPassword(email, password)
-    .then(res=>{
-      const user = res.user;
-      alert("Login berhasil");
-      loginSection.style.display = "none";
+    .then(()=>{
+      console.log("LOGIN BERHASIL");
     })
     .catch(err=>{
       alert(err.message);
     });
 }
 
-   
-  let role = "siswa";
-  if(email.includes("guru")){
-    role = "guru";
-  }
-
-  localStorage.setItem("loginUser", JSON.stringify({
-    email,
-    role
-  }));
-
-  alert("Login berhasil sebagai " + role);
-  afterLogin();
-}
-function afterLogin(){
-  loginSection.style.display = "none";
-
-  const user = JSON.parse(localStorage.getItem("loginUser"));
-  if(!user) return;
-
-  if(user.role === "guru"){
-    document.body.classList.add("role-guru");
-  }
-}
 function logout(){
-  localStorage.removeItem("loginUser");
-  location.reload();
+  auth.signOut();
 }
 /* =========================
    FIREBASE Rules Firestore
@@ -498,13 +483,16 @@ service firebase.storage {
   }
 }
 
+/* =========================
+   AUTH STATE
+========================= */
 auth.onAuthStateChanged(user=>{
   if(user){
-    // SUDAH LOGIN
     loginSection.style.display = "none";
     appContent.style.display = "block";
+    renderPengumuman();
+    renderPDF();
   }else{
-    // BELUM LOGIN
     loginSection.style.display = "block";
     appContent.style.display = "none";
   }
