@@ -94,3 +94,54 @@ header{
   letter-spacing:1px;
   opacity:0.85;
 }
+.top-header{
+  background:#0f4c81;
+  color:#fff;
+  padding:16px;
+}
+
+.header-inner{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  max-width:900px;
+  margin:auto;
+}
+
+.logo{
+  width:60px;
+  height:60px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#fff;
+  padding:6px;
+}
+
+.header-text h1{
+  margin:0;
+  font-size:1.4rem;
+}
+
+.subtitle{
+  margin:4px 0 2px;
+  font-size:0.95rem;
+  opacity:0.95;
+}
+
+.desc{
+  margin:0;
+  font-size:0.85rem;
+  letter-spacing:1px;
+  opacity:0.85;
+}
+
+.contact{
+  margin-top:6px;
+  font-size:0.85rem;
+}
+
+.contact a{
+  color:#ffeb3b;
+  text-decoration:none;
+  font-weight:600;
+}
