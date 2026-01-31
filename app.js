@@ -4,6 +4,8 @@
 let jadwalList = JSON.parse(localStorage.getItem("jadwal")) || [];
 let materiList = JSON.parse(localStorage.getItem("materi")) || [];
 let kursusList = JSON.parse(localStorage.getItem("kursus")) || [];
+let pengumumanList = JSON.parse(localStorage.getItem("pengumuman")) || [];
+let pdfList = JSON.parse(localStorage.getItem("pdf")) || [];
 
 /* =========================
    ELEMENTS
@@ -185,10 +187,46 @@ function reminderHariIni(){
     alert(msg);
   }
 }
+function tambahPengumuman(){
+  if(!pengumumanInput.value) return;
+
+  pengumumanList.unshift({
+    isi: pengumumanInput.value,
+    waktu: new Date().toLocaleString("id-ID")
+  });
+
+  localStorage.setItem("pengumuman", JSON.stringify(pengumumanList));
+  pengumumanInput.value = "";
+  renderPengumuman();
+}
+
+function renderPengumuman(){
+  listPengumuman.innerHTML = "";
+  pengumumanList.forEach((p,i)=>{
+    listPengumuman.innerHTML += `
+      <li>
+        <strong>📢 Pengumuman</strong><br>
+        ${p.isi}<br>
+        <small>🕒 ${p.waktu}</small><br><br>
+        <button onclick="hapusPengumuman(${i})">🗑 Hapus</button>
+      </li>
+    `;
+  });
+}
+
+function hapusPengumuman(i){
+  if(confirm("Hapus pengumuman ini?")){
+    pengumumanList.splice(i,1);
+    localStorage.setItem("pengumuman", JSON.stringify(pengumumanList));
+    renderPengumuman();
+  }
+}
 
 /* =========================
    INIT
 ========================= */
+renderPengumuman();
+renderPDF();
 renderJadwal();
 renderMateri();
 renderKursus();
