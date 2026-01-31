@@ -89,6 +89,19 @@
 
   <ul id="listPDF"></ul>
 </section>
+<section class="card">
+  <h2>💾 Backup & Restore Data</h2>
+
+  <button onclick="backupData()">⬇️ Backup Data</button>
+
+  <input type="file" id="restoreFile" accept=".json" style="margin-top:10px">
+  <button onclick="restoreData()">♻️ Restore Data</button>
+
+  <p style="font-size:0.85em;color:#666">
+    Backup disimpan dalam file JSON.  
+    Restore akan mengganti semua data lama.
+  </p>
+</section>
 
 <script src="app.js"></script>
 </body>
