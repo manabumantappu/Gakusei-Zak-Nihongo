@@ -356,27 +356,7 @@ db.collection("pengumuman")
     }
   });
 
-
-   function renderPengumuman(){
-  listPengumuman.innerHTML = "";
-
-  db.collection("pengumuman")
-    .orderBy("waktu", "desc")
-    .onSnapshot(snapshot=>{
-      listPengumuman.innerHTML = "";
-      snapshot.forEach(doc=>{
-        const p = doc.data();
-        listPengumuman.innerHTML += `
-          <li>
-            📢 ${p.isi}<br>
-            <small>${p.waktu?.toDate().toLocaleString()}</small>
-          </li>
-        `;
-      });
-    });
-}
-
-
+   
 /* =========================
    PDF (STORAGE)
 ========================= */
