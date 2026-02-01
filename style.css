@@ -29,8 +29,6 @@ input, select, button{
   box-sizing: border-box;
  }
 
-}
-
 button{
   background:#0f4c81;
   color:#fff;
@@ -184,11 +182,11 @@ button{
 }
 #loginSection input {
   width: 100%;
-  margin-bottom: 12px;
-  font-size: 1rem;
+ box-sizing:border-box;   /* 🔑 penting */
 }
 
 .btn-logout{
+  width:auto !important;
   background:#c62828;
   color:#fff;
   border:none;
