@@ -233,3 +233,51 @@ body{
     margin:16px auto;
   }
 }
+.section-title{
+  font-size:1.2rem;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.info-box{
+  background:#f9fafb;
+  padding:10px;
+  border-radius:10px;
+  font-size:0.9rem;
+}
+
+.info-box span{
+  font-weight:600;
+}
+.pengumuman-highlight{
+  background:#fff3f3;
+  border-left:4px solid #d32f2f;
+  padding:10px;
+  border-radius:8px;
+  font-weight:600;
+}
+button{
+  padding:12px;
+  font-size:0.95rem;
+  border-radius:10px;
+}
+
+button:active{
+  transform:scale(0.98);
+}
+.btn-logout{
+  position:fixed;
+  top:12px;
+  right:12px;
+  z-index:999;
+}
+body{
+  padding-bottom:80px;
+}
