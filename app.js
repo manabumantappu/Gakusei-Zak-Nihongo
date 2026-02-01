@@ -397,6 +397,27 @@ function renderPDF(){
       });
     });
 }
+.logout-bar{
+  display:flex;
+  justify-content:flex-end;
+  padding:8px 12px;
+  background:#f4f6f8;
+}
+
+.btn-logout{
+  width:auto !important;        /* 🔑 penting */
+  background:#c62828;
+  color:#fff;
+  border:none;
+  padding:6px 14px;
+  border-radius:6px;
+  font-size:0.85rem;
+  cursor:pointer;
+}
+
+.btn-logout:hover{
+  background:#b71c1c;
+}
 
 
 
