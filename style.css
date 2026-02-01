@@ -281,3 +281,12 @@ button:active{
 body{
   padding-bottom:80px;
 }
+/* 🔔 Highlight pengumuman terbaru */
+.pengumuman-highlight{
+  background:#fff3e0;
+  border-left:6px solid #ff9800;
+  padding:10px 12px;
+  border-radius:6px;
+  color:#d32f2f;
+  font-weight:600;
+}
