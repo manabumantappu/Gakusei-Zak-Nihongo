@@ -72,24 +72,6 @@ function tambahPengumuman(){
   pengumumanInput.value = "";
 }
 
-function renderPengumuman(){
-  listPengumuman.innerHTML = "";
-
-  db.collection("pengumuman")
-    .orderBy("waktu","desc")
-    .onSnapshot(snapshot=>{
-      listPengumuman.innerHTML = "";
-      snapshot.forEach(doc=>{
-        const p = doc.data();
-        listPengumuman.innerHTML += `
-          <li>
-            📢 ${p.isi}<br>
-            <small>${p.waktu?.toDate().toLocaleString()}</small>
-          </li>
-        `;
-      });
-    });
-}
 
 /* =========================
    DATA STORAGE
@@ -331,6 +313,7 @@ function restoreData(){
   };
   reader.readAsText(file);
 }
+
 function renderDashboard(){
   /* === DATA SISWA === */
   const siswa = JSON.parse(localStorage.getItem("siswa")) || {};
@@ -361,6 +344,17 @@ function renderDashboard(){
       `;
     });
   }
+db.collection("pengumuman")
+  .orderBy("waktu","desc")
+  .limit(1)
+  .get()
+  .then(snap=>{
+    if(!snap.empty){
+      dashPengumuman.innerText = snap.docs[0].data().isi;
+    }else{
+      dashPengumuman.innerText = "Tidak ada pengumuman";
+    }
+  });
 
 
    function renderPengumuman(){
