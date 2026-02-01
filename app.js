@@ -52,10 +52,12 @@ function logout(){
    AUTH STATE
 ========================= */
 auth.onAuthStateChanged(user=>{
-   console.log("AUTH STATE:", user);
+  console.log("AUTH STATE:", user);
   if(user){
     loginSection.style.display = "none";
     appContent.style.display = "block";
+
+    renderDashboard();   // 🔑 WAJIB
     renderPengumuman();
     renderPDF();
   }else{
@@ -63,6 +65,7 @@ auth.onAuthStateChanged(user=>{
     appContent.style.display = "none";
   }
 });
+
 /* =========================
    PENGUMUMAN (FIRESTORE)
 ========================= */
