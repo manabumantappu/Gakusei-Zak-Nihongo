@@ -267,13 +267,6 @@ body{
 .info-box span{
   font-weight:600;
 }
-.pengumuman-highlight{
-  background:#fff3f3;
-  border-left:4px solid #d32f2f;
-  padding:10px;
-  border-radius:8px;
-  font-weight:600;
-}
 button{
   padding:12px;
   font-size:0.95rem;
