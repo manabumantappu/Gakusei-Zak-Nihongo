@@ -52,26 +52,24 @@ function logout(){
    AUTH STATE
 ========================= */
 const guruOnlyEls = document.querySelectorAll(".guru-only");
-auth.onAuthStateChanged(user=>{
+auth.onAuthStateChanged(async user => {
   console.log("AUTH STATE:", user);
+
   if(user){
     loginSection.style.display = "none";
     appContent.style.display = "block";
-    
-    const token = await user.getIdTokenResult();
+
+    const token = await user.getIdTokenResult(true);
     const role = token.claims.role || "siswa";
-   
+
     console.log("ROLE USER:", role);
 
-    if(role === "guru"){
-      document.body.classList.add("role-guru");
-    }else{
-      document.body.classList.add("role-siswa");
-    }
-    
+    document.body.classList.remove("role-guru","role-siswa");
+    document.body.classList.add(role === "guru" ? "role-guru" : "role-siswa");
+
     renderPengumuman();
     renderPDF();
-    listenPengumumanDashboard(); // ✅ INI WAJIB
+    listenPengumumanDashboard();
   }else{
     loginSection.style.display = "block";
     appContent.style.display = "none";
@@ -430,7 +428,7 @@ db.collection("pengumuman")
       dashPengumuman.innerText = "Tidak ada pengumuman";
     }
   });
-
+}
    
 /* =========================
    PDF (STORAGE FIREBASE BERBAYAR)
