@@ -69,7 +69,7 @@ auth.onAuthStateChanged(async user => {
 
     renderPengumuman();
     renderPDF();
-    listenPengumumanDashboard();
+    listenPengumumanboard();
   }else{
     loginSection.style.display = "block";
     appContent.style.display = "none";
@@ -124,7 +124,7 @@ function renderPengumuman(){
       console.error(err);
     });
 }
-function listenPengumumanDashboard(){
+function listenPengumumanboard(){
   db.collection("pengumuman")
     .orderBy("waktu", "desc")
     .limit(1)
