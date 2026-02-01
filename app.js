@@ -57,7 +57,18 @@ auth.onAuthStateChanged(user=>{
   if(user){
     loginSection.style.display = "none";
     appContent.style.display = "block";
+    
+    const token = await user.getIdTokenResult();
+    const role = token.claims.role || "siswa";
+   
+    console.log("ROLE USER:", role);
 
+    if(role === "guru"){
+      document.body.classList.add("role-guru");
+    }else{
+      document.body.classList.add("role-siswa");
+    }
+    
     renderPengumuman();
     renderPDF();
     listenPengumumanDashboard(); // ✅ INI WAJIB
