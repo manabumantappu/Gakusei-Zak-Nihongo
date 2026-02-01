@@ -410,7 +410,7 @@ db.collection("pengumuman")
       dashPengumuman.innerText = "Tidak ada pengumuman";
     }
   });
- }
+
    
 /* =========================
    PDF (STORAGE FIREBASE BERBAYAR)
