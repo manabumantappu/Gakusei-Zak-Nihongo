@@ -18,6 +18,78 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 
+ /* =========================
+   LOGIN FIREBASE
+========================= */
+function loginUser(){
+  const email = loginEmail.value;
+  const password = loginPassword.value;
+
+  if(!email || !password){
+    alert("Email dan password wajib diisi");
+    return;
+  }
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(()=>{
+      console.log("LOGIN BERHASIL");
+    })
+    .catch(err=>{
+      alert(err.message);
+    });
+}
+
+function logout(){
+  auth.signOut();
+}
+
+/* =========================
+   AUTH STATE
+========================= */
+auth.onAuthStateChanged(user=>{
+  if(user){
+    loginSection.style.display = "none";
+    appContent.style.display = "block";
+    renderPengumuman();
+    renderPDF();
+  }else{
+    loginSection.style.display = "block";
+    appContent.style.display = "none";
+  }
+});
+/* =========================
+   PENGUMUMAN (FIRESTORE)
+========================= */
+function tambahPengumuman(){
+  const isi = pengumumanInput.value;
+  if(!isi) return;
+
+  db.collection("pengumuman").add({
+    isi,
+    waktu: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  pengumumanInput.value = "";
+}
+
+function renderPengumuman(){
+  listPengumuman.innerHTML = "";
+
+  db.collection("pengumuman")
+    .orderBy("waktu","desc")
+    .onSnapshot(snapshot=>{
+      listPengumuman.innerHTML = "";
+      snapshot.forEach(doc=>{
+        const p = doc.data();
+        listPengumuman.innerHTML += `
+          <li>
+            📢 ${p.isi}<br>
+            <small>${p.waktu?.toDate().toLocaleString()}</small>
+          </li>
+        `;
+      });
+    });
+}
 
 /* =========================
    DATA STORAGE
@@ -25,7 +97,6 @@ const storage = firebase.storage();
 let jadwalList = JSON.parse(localStorage.getItem("jadwal")) || [];
 let materiList = JSON.parse(localStorage.getItem("materi")) || [];
 let kursusList = JSON.parse(localStorage.getItem("kursus")) || [];
-let pengumumanList = JSON.parse(localStorage.getItem("pengumuman")) || [];
 let pdfList = JSON.parse(localStorage.getItem("pdf")) || [];
 
 
@@ -206,47 +277,13 @@ function reminderHariIni(){
     alert(msg);
   }
 }
-function tambahPengumuman(){
-  if(!pengumumanInput.value) return;
 
-  pengumumanList.unshift({
-    isi: pengumumanInput.value,
-    waktu: new Date().toLocaleString("id-ID")
-  });
-
-  localStorage.setItem("pengumuman", JSON.stringify(pengumumanList));
-  pengumumanInput.value = "";
-  renderPengumuman();
-}
-
-function renderPengumuman(){
-  listPengumuman.innerHTML = "";
-  pengumumanList.forEach((p,i)=>{
-    listPengumuman.innerHTML += `
-      <li>
-        <strong>📢 Pengumuman</strong><br>
-        ${p.isi}<br>
-        <small>🕒 ${p.waktu}</small><br><br>
-        <button onclick="hapusPengumuman(${i})">🗑 Hapus</button>
-      </li>
-    `;
-  });
-}
-
-function hapusPengumuman(i){
-  if(confirm("Hapus pengumuman ini?")){
-    pengumumanList.splice(i,1);
-    localStorage.setItem("pengumuman", JSON.stringify(pengumumanList));
-    renderPengumuman();
-  }
-}
 function backupData(){
   const data = {
     siswa: JSON.parse(localStorage.getItem("siswa")),
     jadwal: JSON.parse(localStorage.getItem("jadwal")) || [],
     materi: JSON.parse(localStorage.getItem("materi")) || [],
     kursus: JSON.parse(localStorage.getItem("kursus")) || [],
-    pengumuman: JSON.parse(localStorage.getItem("pengumuman")) || [],
     pdf: JSON.parse(localStorage.getItem("pdf")) || []
   };
 
@@ -283,7 +320,6 @@ function restoreData(){
       localStorage.setItem("jadwal", JSON.stringify(data.jadwal || []));
       localStorage.setItem("materi", JSON.stringify(data.materi || []));
       localStorage.setItem("kursus", JSON.stringify(data.kursus || []));
-      localStorage.setItem("pengumuman", JSON.stringify(data.pengumuman || []));
       localStorage.setItem("pdf", JSON.stringify(data.pdf || []));
 
       alert("✅ Restore berhasil. Aplikasi akan dimuat ulang.");
@@ -362,39 +398,7 @@ function loginUser(){
     });
 }
 
-/* =========================
-   PENGUMUMAN (FIRESTORE)
-========================= */
-function tambahPengumuman(){
-  const isi = pengumumanInput.value;
-  if(!isi) return;
 
-  db.collection("pengumuman").add({
-    isi,
-    waktu: firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  pengumumanInput.value = "";
-}
-
-function renderPengumuman(){
-  listPengumuman.innerHTML = "";
-
-  db.collection("pengumuman")
-    .orderBy("waktu","desc")
-    .onSnapshot(snapshot=>{
-      listPengumuman.innerHTML = "";
-      snapshot.forEach(doc=>{
-        const p = doc.data();
-        listPengumuman.innerHTML += `
-          <li>
-            📢 ${p.isi}<br>
-            <small>${p.waktu?.toDate().toLocaleString()}</small>
-          </li>
-        `;
-      });
-    });
-}
 /* =========================
    PDF (STORAGE)
 ========================= */
@@ -430,79 +434,12 @@ function renderPDF(){
     });
 }
 
- /* =========================
-   LOGIN FIREBASE
-========================= */
-function loginUser(){
-  const email = loginEmail.value;
-  const password = loginPassword.value;
 
-  if(!email || !password){
-    alert("Email dan password wajib diisi");
-    return;
-  }
-
-  auth.signInWithEmailAndPassword(email, password)
-    .then(()=>{
-      console.log("LOGIN BERHASIL");
-    })
-    .catch(err=>{
-      alert(err.message);
-    });
-}
-
-function logout(){
-  auth.signOut();
-}
-/* =========================
-   FIREBASE Rules Firestore
-========================= */
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-
-    match /pengumuman/{docId} {
-      allow read: if true;
-      allow write: if request.auth != null
-                   && request.auth.token.role == "guru";
-    }
-  }
-}
-/* =========================
-   FIREBASE Rules Storage
-========================= */
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-
-    match /pdf/{allPaths=**} {
-      allow read: if true;
-      allow write: if request.auth != null
-                   && request.auth.token.role == "guru";
-    }
-  }
-}
-
-/* =========================
-   AUTH STATE
-========================= */
-auth.onAuthStateChanged(user=>{
-  if(user){
-    loginSection.style.display = "none";
-    appContent.style.display = "block";
-    renderPengumuman();
-    renderPDF();
-  }else{
-    loginSection.style.display = "block";
-    appContent.style.display = "none";
-  }
-});
 
 /* =========================
    INIT
 ========================= */
 renderDashboard();
-renderPengumuman();
 renderPDF();
 renderJadwal();
 renderMateri();
