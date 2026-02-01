@@ -58,17 +58,9 @@ auth.onAuthStateChanged(user=>{
     loginSection.style.display = "none";
     appContent.style.display = "block";
 
-    renderDashboard();   // 🔑 WAJIB
     renderPengumuman();
     renderPDF();
-
-      // 🔑 ROLE CHECK
-    const isGuru = user.email.endsWith("@zaknihongo.id");
-
-    guruOnlyEls.forEach(el=>{
-      el.style.display = isGuru ? "block" : "none";
-    });
-    
+    listenPengumumanDashboard(); // ✅ INI WAJIB
   }else{
     loginSection.style.display = "block";
     appContent.style.display = "none";
