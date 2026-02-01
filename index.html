@@ -149,14 +149,20 @@
 </section>
 
 <section class="card guru-only">
-  <h2>📄 Materi PDF</h2>
+  <h2>📄 Materi PDF (Guru)</h2>
 
-  <!-- Upload PDF (Guru) -->
-  <input type="file" id="pdfFile" accept="application/pdf">
-  <button onclick="uploadPDF()">⬆️ Upload PDF</button>
+  <p style="font-size:0.9em;color:#555">
+    Upload PDF ke Google Drive → set <b>Anyone with link</b> → paste link di bawah
+  </p>
+
+  <input id="pdfJudul" placeholder="Judul PDF (contoh: JLPT N4 Kanji)">
+  <input id="pdfLink" placeholder="Link Google Drive PDF">
+
+  <button onclick="uploadPDF()">➕ Tambah PDF</button>
 
   <ul id="listPDF"></ul>
 </section>
+
 
    
 <section class="card">
