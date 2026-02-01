@@ -105,6 +105,10 @@ const kursusKelas = document.getElementById("kursusKelas");
 const listJadwal = document.getElementById("listJadwal");
 const listMateri = document.getElementById("listMateri");
 const listKursus = document.getElementById("listKursus");
+// PDF (Google Drive)
+const pdfJudul = document.getElementById("pdfJudul");
+const pdfLink  = document.getElementById("pdfLink");
+const listPDF  = document.getElementById("listPDF");
 
 const progress = document.getElementById("progress");
 const progresText = document.getElementById("progresText");
