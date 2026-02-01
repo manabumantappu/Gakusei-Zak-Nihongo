@@ -189,3 +189,13 @@ button{
   font-size: 1rem;
 }
 
+.btn-logout{
+  background:#c62828;
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  float:right;
+  margin:12px;
+}
