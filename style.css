@@ -25,6 +25,11 @@ input, select, button{
   margin-top:8px;
   border-radius:8px;
   border:1px solid #ccc;
+
+  box-sizing: border-box;
+  width: 100%;
+}
+
 }
 
 button{
