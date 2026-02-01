@@ -384,8 +384,8 @@ db.collection("pengumuman")
    PDF (STORAGE LINK GDRIVE)
 ========================= */
 function uploadPDF(){
-  const judul = prompt("Judul PDF:");
-  const link = prompt("Paste link Google Drive:");
+  const judul = document.getElementById("pdfJudul").value;
+  const link = document.getElementById("pdfLink").value;
 
   if(!judul || !link){
     alert("Judul dan link wajib diisi");
@@ -397,6 +397,9 @@ function uploadPDF(){
     link: link,
     waktu: firebase.firestore.FieldValue.serverTimestamp()
   });
+
+  document.getElementById("pdfJudul").value = "";
+  document.getElementById("pdfLink").value = "";
 
   alert("✅ PDF berhasil ditambahkan");
 }
