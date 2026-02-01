@@ -21,7 +21,7 @@ firebase.initializeApp(firebaseConfig);
 // Services
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
+// const storage = firebase.storage();
 
  /* =========================
    LOGIN FIREBASE
@@ -364,26 +364,48 @@ db.collection("pengumuman")
  }
    
 /* =========================
-   PDF (STORAGE)
+   PDF (STORAGE FIREBASE BERBAYAR)
+========================= */
+//function uploadPDF(){
+ // const file = pdfFile.files[0];
+ // if(!file) return;
+
+  //const ref = storage.ref("pdf/" + file.name);
+  //ref.put(file).then(()=>{
+    //ref.getDownloadURL().then(url=>{
+      //db.collection("pdf").add({
+        //judul: file.name,
+        //link: url
+     // });
+  //  });
+ // });
+//}
+/* =========================
+   PDF (STORAGE LINK GDRIVE)
 ========================= */
 function uploadPDF(){
-  const file = pdfFile.files[0];
-  if(!file) return;
+  const judul = prompt("Judul PDF:");
+  const link = prompt("Paste link Google Drive:");
 
-  const ref = storage.ref("pdf/" + file.name);
-  ref.put(file).then(()=>{
-    ref.getDownloadURL().then(url=>{
-      db.collection("pdf").add({
-        judul: file.name,
-        link: url
-      });
-    });
+  if(!judul || !link){
+    alert("Judul dan link wajib diisi");
+    return;
+  }
+
+  db.collection("pdf").add({
+    judul: judul,
+    link: link,
+    waktu: firebase.firestore.FieldValue.serverTimestamp()
   });
+
+  alert("✅ PDF berhasil ditambahkan");
 }
+
 function renderPDF(){
   listPDF.innerHTML = "";
 
   db.collection("pdf")
+    .orderBy("waktu","desc")
     .onSnapshot(snapshot=>{
       listPDF.innerHTML = "";
       snapshot.forEach(doc=>{
@@ -391,13 +413,12 @@ function renderPDF(){
         listPDF.innerHTML += `
           <li>
             📄 ${p.judul}<br>
-            <a href="${p.link}" target="_blank">⬇️ Unduh PDF</a>
+            <a href="${p.link}" target="_blank">⬇️ Buka / Unduh PDF</a>
           </li>
         `;
       });
     });
 }
-
 
 /* =========================
    INIT
