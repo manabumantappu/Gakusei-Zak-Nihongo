@@ -123,6 +123,23 @@ function renderPengumuman(){
       console.error(err);
     });
 }
+function listenPengumumanDashboard(){
+  db.collection("pengumuman")
+    .orderBy("waktu", "desc")
+    .limit(1)
+    .onSnapshot(snapshot=>{
+      if(snapshot.empty){
+        dashPengumuman.innerText = "Tidak ada pengumuman";
+        dashPengumuman.style.color = "#666";
+        return;
+      }
+
+      const p = snapshot.docs[0].data();
+      dashPengumuman.innerText = p.isi;
+      dashPengumuman.style.color = "#d32f2f"; // 🔴 highlight
+      dashPengumuman.style.fontWeight = "600";
+    });
+}
 
 /* =========================
    DATA STORAGE
