@@ -362,22 +362,6 @@ function renderDashboard(){
     });
   }
 
-  /* === PENGUMUMAN TERBARU === */
-  if(pengumumanList.length){
-    dashPengumuman.innerText = pengumumanList[0].isi;
-  }else{
-    dashPengumuman.innerText = "Tidak ada pengumuman";
-  }
-}
-
-function loginUser(){
-  const email = loginEmail.value;
-  const password = loginPassword.value;
-
-  if(!email || !password){
-    alert("Email dan password wajib diisi");
-    return;
-  }
 
    function renderPengumuman(){
   listPengumuman.innerHTML = "";
@@ -440,7 +424,6 @@ function renderPDF(){
    INIT
 ========================= */
 renderDashboard();
-renderPDF();
 renderJadwal();
 renderMateri();
 renderKursus();
