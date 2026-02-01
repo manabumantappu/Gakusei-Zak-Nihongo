@@ -216,3 +216,20 @@ button{
   border-radius:4px;
   margin-left:6px;
 }
+/* ===== MOBILE FIRST ===== */
+body{
+  background:#f4f6f8;
+}
+
+.card{
+  margin:12px 10px;
+  padding:14px;
+  border-radius:14px;
+}
+
+@media (min-width:768px){
+  .card{
+    max-width:720px;
+    margin:16px auto;
+  }
+}
