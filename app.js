@@ -1,3 +1,8 @@
+const loginEmail = document.getElementById("loginEmail");
+const loginPassword = document.getElementById("loginPassword");
+const loginSection = document.getElementById("loginSection");
+const appContent = document.getElementById("appContent");
+
 // ===============================
 // FIREBASE INIT (FINAL & AMAN)
 // ===============================
@@ -47,6 +52,7 @@ function logout(){
    AUTH STATE
 ========================= */
 auth.onAuthStateChanged(user=>{
+   console.log("AUTH STATE:", user);
   if(user){
     loginSection.style.display = "none";
     appContent.style.display = "block";
