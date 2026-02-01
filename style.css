@@ -196,3 +196,23 @@ button{
   float:right;
   margin:12px;
 }
+.pengumuman-item{
+  padding:10px;
+  border-left:4px solid #0f4c81;
+  background:#f9fbff;
+  border-radius:6px;
+}
+
+.pengumuman-item.baru{
+  border-left-color:#ff9800;
+  background:#fff3e0;
+}
+
+.badge-baru{
+  background:#ff5722;
+  color:#fff;
+  font-size:0.7rem;
+  padding:2px 6px;
+  border-radius:4px;
+  margin-left:6px;
+}
