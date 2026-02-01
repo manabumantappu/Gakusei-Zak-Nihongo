@@ -51,6 +51,7 @@ function logout(){
 /* =========================
    AUTH STATE
 ========================= */
+const guruOnlyEls = document.querySelectorAll(".guru-only");
 auth.onAuthStateChanged(user=>{
   console.log("AUTH STATE:", user);
   if(user){
@@ -60,6 +61,14 @@ auth.onAuthStateChanged(user=>{
     renderDashboard();   // 🔑 WAJIB
     renderPengumuman();
     renderPDF();
+
+      // 🔑 ROLE CHECK
+    const isGuru = user.email.endsWith("@zaknihongo.id");
+
+    guruOnlyEls.forEach(el=>{
+      el.style.display = isGuru ? "block" : "none";
+    });
+    
   }else{
     loginSection.style.display = "block";
     appContent.style.display = "none";
@@ -81,6 +90,39 @@ function tambahPengumuman(){
   pengumumanInput.value = "";
 }
 
+function renderPengumuman(){
+  if(!listPengumuman) return;
+
+  listPengumuman.innerHTML = "<li>⏳ Memuat pengumuman...</li>";
+
+  db.collection("pengumuman")
+    .orderBy("waktu","desc")
+    .onSnapshot(snapshot=>{
+      listPengumuman.innerHTML = "";
+
+      if(snapshot.empty){
+        listPengumuman.innerHTML = "<li>Tidak ada pengumuman</li>";
+        return;
+      }
+
+      snapshot.forEach(doc=>{
+        const p = doc.data();
+        const waktu = p.waktu
+          ? p.waktu.toDate().toLocaleString("id-ID")
+          : "";
+
+        listPengumuman.innerHTML += `
+          <li class="pengumuman-item">
+            📢 ${p.isi}<br>
+            <small>${waktu}</small>
+          </li>
+        `;
+      });
+    }, err=>{
+      listPengumuman.innerHTML = "<li>❌ Gagal memuat pengumuman</li>";
+      console.error(err);
+    });
+}
 
 /* =========================
    DATA STORAGE
