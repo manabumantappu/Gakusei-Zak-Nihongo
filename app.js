@@ -484,13 +484,13 @@ function renderPDF(){
         return;
       }
 
-      snapshot.forEach(doc=>{
+       snapshot.forEach(doc=>{
         const p = doc.data();
         listPDF.innerHTML += `
-          <li>
-            📄 <strong>${p.judul}</strong><br>
-            <a href="${p.link}" target="_blank">
-              ⬇️ Buka PDF
+          <li class="pdf-item">
+            <div class="pdf-title">${p.judul}</div>
+            <a class="pdf-btn" href="${p.link}" target="_blank">
+              Buka PDF
             </a>
           </li>
         `;
