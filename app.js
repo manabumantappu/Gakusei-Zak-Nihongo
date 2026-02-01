@@ -472,18 +472,26 @@ function uploadPDF(){
 }
 
 function renderPDF(){
-  listPDF.innerHTML = "";
+  listPDF.innerHTML = "<li>⏳ Memuat PDF...</li>";
 
   db.collection("pdf")
     .orderBy("waktu","desc")
     .onSnapshot(snapshot=>{
       listPDF.innerHTML = "";
+
+      if(snapshot.empty){
+        listPDF.innerHTML = "<li>Belum ada materi PDF</li>";
+        return;
+      }
+
       snapshot.forEach(doc=>{
         const p = doc.data();
         listPDF.innerHTML += `
           <li>
-            📄 ${p.judul}<br>
-            <a href="${p.link}" target="_blank">⬇️ Buka / Unduh PDF</a>
+            📄 <strong>${p.judul}</strong><br>
+            <a href="${p.link}" target="_blank">
+              ⬇️ Buka PDF
+            </a>
           </li>
         `;
       });
