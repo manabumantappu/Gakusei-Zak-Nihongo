@@ -336,18 +336,23 @@ body{
   background:#0c3d68;
 }
 /* ===== POPUP PENGUMUMAN + ANIMASI ===== */
-.popup-overlay{
+/* ===== POPUP PENGUMUMAN ===== */
+.popup{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.55);
-  display:none;
-  align-items:flex-end; /* slide dari bawah */
+  display:flex;
+  align-items:flex-end;   /* slide dari bawah */
   justify-content:center;
   z-index:3000;
+
+  opacity:1;
+  pointer-events:auto;
 }
 
-.popup-overlay.show{
-  display:flex;
+.popup.hide{
+  opacity:0;
+  pointer-events:none;
 }
 
 .popup-box{
@@ -359,29 +364,26 @@ body{
   text-align:center;
 
   transform:translateY(100%);
-  opacity:0;
-
   animation:popupSlideUp .35s ease forwards;
 }
 
 @keyframes popupSlideUp{
   to{
     transform:translateY(0);
-    opacity:1;
   }
 }
 
 /* animasi keluar */
-.popup-overlay.hide .popup-box{
+.popup.hide .popup-box{
   animation:popupSlideDown .25s ease forwards;
 }
 
 @keyframes popupSlideDown{
   to{
     transform:translateY(100%);
-    opacity:0;
   }
 }
+
 
 .popup-box h3{
   margin-top:0;
