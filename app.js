@@ -3,6 +3,11 @@ const loginPassword = document.getElementById("loginPassword");
 const loginSection = document.getElementById("loginSection");
 const appContent = document.getElementById("appContent");
 
+// ===== POPUP PENGUMUMAN ELEMENT =====
+const popupPengumuman = document.getElementById("popupPengumuman");
+const popupPengumumanText = document.getElementById("popupPengumumanText");
+const popupPengumumanWaktu = document.getElementById("popupPengumumanWaktu");
+
 // ===============================
 // FIREBASE INIT (FINAL & AMAN)
 // ===============================
@@ -525,17 +530,12 @@ function listenPopupPengumuman(){
           : "";
 
       popupPengumuman.classList.remove("hide");
-      popupPengumuman.classList.add("show");
     });
 }
 
+
 function tutupPopupPengumuman(){
   popupPengumuman.classList.add("hide");
-
-  setTimeout(()=>{
-    popupPengumuman.classList.remove("show");
-    popupPengumuman.classList.remove("hide");
-  }, 250);
 
   if(pengumumanTerakhirID){
     localStorage.setItem(
