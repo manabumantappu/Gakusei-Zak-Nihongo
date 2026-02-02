@@ -4,9 +4,16 @@ const loginSection = document.getElementById("loginSection");
 const appContent = document.getElementById("appContent");
 
 // ===== POPUP PENGUMUMAN ELEMENT =====
-const popupPengumuman = document.getElementById("popupPengumuman");
-const popupPengumumanText = document.getElementById("popupPengumumanText");
-const popupPengumumanWaktu = document.getElementById("popupPengumumanWaktu");
+let popupPengumuman,
+    popupPengumumanText,
+    popupPengumumanWaktu;
+
+window.addEventListener("DOMContentLoaded", () => {
+  popupPengumuman = document.getElementById("popupPengumuman");
+  popupPengumumanText = document.getElementById("popupPengumumanText");
+  popupPengumumanWaktu = document.getElementById("popupPengumumanWaktu");
+});
+
 
 // ===============================
 // FIREBASE INIT (FINAL & AMAN)
@@ -75,7 +82,9 @@ auth.onAuthStateChanged(async user => {
     renderPengumuman();
     renderPDF();
     listenPengumumanboard();
-    listenPopupPengumuman(); // 🔔 popup otomatis
+     // 🔔 POPUP HANYA UNTUK SISWA
+    if(role === "siswa"){
+      listenPopupPengumuman();
 
   }else{
     loginSection.style.display = "block";
