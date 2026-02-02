@@ -85,16 +85,17 @@ auth.onAuthStateChanged(async user => {
     renderPDF();
     listenPengumumanboard();
 
-    // 🔔 POPUP KHUSUS SISWA SAJA
+    // 🔔 POPUP KHUSUS SISWA
     if(role === "siswa"){
       listenPopupPengumuman();
     }
 
-  }else{
+  } else {
     loginSection.style.display = "block";
     appContent.style.display = "none";
   }
 });
+
 
 
 /* =========================
