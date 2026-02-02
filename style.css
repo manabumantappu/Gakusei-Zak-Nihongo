@@ -401,3 +401,38 @@ body{
   border-radius:10px;
 }
 
+/* ===== BADGE BARU ===== */
+.badge-baru{
+  display:inline-block;
+  background:#ff5722;
+  color:#fff;
+  font-size:0.7rem;
+  font-weight:600;
+  padding:3px 8px;
+  border-radius:999px;
+  margin-left:6px;
+  vertical-align:middle;
+
+  animation:badgePulse 1.8s infinite;
+}
+
+/* denyut halus */
+@keyframes badgePulse{
+  0%   { transform:scale(1); }
+  50%  { transform:scale(1.1); }
+  100% { transform:scale(1); }
+}
+
+/* ===== GETAR HALUS POPUP ===== */
+.popup-box.shake{
+  animation:shakeSoft .35s ease-in-out;
+}
+
+@keyframes shakeSoft{
+  0%   { transform:translateY(0) translateX(0); }
+  25%  { transform:translateY(0) translateX(-3px); }
+  50%  { transform:translateY(0) translateX(3px); }
+  75%  { transform:translateY(0) translateX(-2px); }
+  100% { transform:translateY(0) translateX(0); }
+}
+
