@@ -91,6 +91,7 @@ auth.onAuthStateChanged(async user => {
     appContent.style.display = "none";
   }
 });
+if(document.body.classList.contains("role-guru")) return;
 
 /* =========================
    PENGUMUMAN (FIRESTORE)
