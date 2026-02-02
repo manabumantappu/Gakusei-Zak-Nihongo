@@ -438,3 +438,35 @@ body{
   100% { transform:translateY(0) translateX(0); }
 }
 
+/* ===== FOOTER MANABU MANTAPPU ===== */
+.app-footer{
+  margin-top:40px;
+  padding:20px 16px 28px;
+  background:#0f4c81;
+  color:#fff;
+  text-align:center;
+}
+
+.footer-inner{
+  max-width:720px;
+  margin:0 auto;
+}
+
+.footer-brand{
+  font-size:1.1rem;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.footer-desc{
+  font-size:0.85rem;
+  opacity:0.9;
+  line-height:1.5;
+}
+
+.footer-meta{
+  margin-top:12px;
+  font-size:0.75rem;
+  opacity:0.75;
+}
+
