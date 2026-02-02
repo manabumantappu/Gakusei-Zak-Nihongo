@@ -70,6 +70,8 @@ auth.onAuthStateChanged(async user => {
     renderPengumuman();
     renderPDF();
     listenPengumumanboard();
+    listenPopupPengumuman(); // 🔔 popup otomatis
+
   }else{
     loginSection.style.display = "block";
     appContent.style.display = "none";
@@ -496,6 +498,45 @@ function renderPDF(){
         `;
       });
     });
+}
+let pengumumanTerakhirID = null;
+
+function listenPopupPengumuman(){
+  db.collection("pengumuman")
+    .orderBy("waktu","desc")
+    .limit(1)
+    .onSnapshot(snapshot=>{
+      if(snapshot.empty) return;
+
+      const doc = snapshot.docs[0];
+      const data = doc.data();
+
+      const terakhirDilihat =
+        localStorage.getItem("pengumuman_dibaca");
+
+      // kalau sudah pernah dibaca → stop
+      if(terakhirDilihat === doc.id) return;
+
+      pengumumanTerakhirID = doc.id;
+
+      popupPengumumanText.innerText = data.isi;
+      popupPengumumanWaktu.innerText =
+        data.waktu
+          ? data.waktu.toDate().toLocaleString("id-ID")
+          : "";
+
+      popupPengumuman.style.display = "flex";
+    });
+}
+
+function tutupPopupPengumuman(){
+  if(pengumumanTerakhirID){
+    localStorage.setItem(
+      "pengumuman_dibaca",
+      pengumumanTerakhirID
+    );
+  }
+  popupPengumuman.style.display = "none";
 }
 
 /* =========================
