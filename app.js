@@ -77,21 +77,25 @@ auth.onAuthStateChanged(async user => {
     console.log("ROLE USER:", role);
 
     document.body.classList.remove("role-guru","role-siswa");
-    document.body.classList.add(role === "guru" ? "role-guru" : "role-siswa");
+    document.body.classList.add(
+      role === "guru" ? "role-guru" : "role-siswa"
+    );
 
     renderPengumuman();
     renderPDF();
     listenPengumumanboard();
-     // 🔔 POPUP HANYA UNTUK SISWA
+
+    // 🔔 POPUP KHUSUS SISWA SAJA
     if(role === "siswa"){
       listenPopupPengumuman();
+    }
 
   }else{
     loginSection.style.display = "block";
     appContent.style.display = "none";
   }
 });
-if(document.body.classList.contains("role-guru")) return;
+
 
 /* =========================
    PENGUMUMAN (FIRESTORE)
