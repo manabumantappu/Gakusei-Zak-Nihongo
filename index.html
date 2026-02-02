@@ -185,14 +185,23 @@
   </p>
 </section>
   
- <div id="popupPengumuman" class="popup-overlay">
+ <div id="popupPengumuman" class="popup hide">
   <div class="popup-box">
-    <h3>📢 Pengumuman Sensei</h3>
-    <p id="popupPengumumanText">...</p>
+
+    <!-- 🔽 TEMPEL DI SINI -->
+    <h3>
+      📢 Pengumuman Sensei
+      <span id="badgeBaru" class="badge-baru">BARU</span>
+    </h3>
+    <!-- 🔼 SAMPAI SINI -->
+
+    <p id="popupPengumumanText"></p>
     <small id="popupPengumumanWaktu"></small>
+
     <button onclick="tutupPopupPengumuman()">Mengerti</button>
   </div>
 </div>
+
  
  <!-- FIREBASE SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
