@@ -560,12 +560,6 @@ function tutupPopupPengumuman(){
   }
 }
 
-const footerYear = document.getElementById("footerYear");
-if(footerYear){
-  footerYear.innerText = new Date().getFullYear();
-}
-
-
 /* =========================
    INIT
 ========================= */
