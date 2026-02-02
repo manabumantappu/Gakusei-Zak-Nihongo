@@ -514,7 +514,6 @@ function listenPopupPengumuman(){
       const terakhirDilihat =
         localStorage.getItem("pengumuman_dibaca");
 
-      // kalau sudah pernah dibaca → stop
       if(terakhirDilihat === doc.id) return;
 
       pengumumanTerakhirID = doc.id;
@@ -525,19 +524,27 @@ function listenPopupPengumuman(){
           ? data.waktu.toDate().toLocaleString("id-ID")
           : "";
 
-      popupPengumuman.style.display = "flex";
+      popupPengumuman.classList.remove("hide");
+      popupPengumuman.classList.add("show");
     });
 }
 
 function tutupPopupPengumuman(){
+  popupPengumuman.classList.add("hide");
+
+  setTimeout(()=>{
+    popupPengumuman.classList.remove("show");
+    popupPengumuman.classList.remove("hide");
+  }, 250);
+
   if(pengumumanTerakhirID){
     localStorage.setItem(
       "pengumuman_dibaca",
       pengumumanTerakhirID
     );
   }
-  popupPengumuman.style.display = "none";
 }
+
 
 /* =========================
    INIT
