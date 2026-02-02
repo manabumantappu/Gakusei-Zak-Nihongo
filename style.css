@@ -335,25 +335,52 @@ body{
 .pdf-btn:hover{
   background:#0c3d68;
 }
-/* ===== POPUP PENGUMUMAN ===== */
+/* ===== POPUP PENGUMUMAN + ANIMASI ===== */
 .popup-overlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.55);
   display:none;
-  align-items:center;
+  align-items:flex-end; /* slide dari bawah */
   justify-content:center;
   z-index:3000;
 }
 
+.popup-overlay.show{
+  display:flex;
+}
+
 .popup-box{
   background:#fff;
+  width:100%;
+  max-width:420px;
   padding:20px;
-  border-radius:14px;
-  width:90%;
-  max-width:380px;
+  border-radius:18px 18px 0 0;
   text-align:center;
-  box-shadow:0 12px 30px rgba(0,0,0,.25);
+
+  transform:translateY(100%);
+  opacity:0;
+
+  animation:popupSlideUp .35s ease forwards;
+}
+
+@keyframes popupSlideUp{
+  to{
+    transform:translateY(0);
+    opacity:1;
+  }
+}
+
+/* animasi keluar */
+.popup-overlay.hide .popup-box{
+  animation:popupSlideDown .25s ease forwards;
+}
+
+@keyframes popupSlideDown{
+  to{
+    transform:translateY(100%);
+    opacity:0;
+  }
 }
 
 .popup-box h3{
@@ -371,4 +398,6 @@ body{
 .popup-box button{
   margin-top:16px;
   background:#0f4c81;
+  border-radius:10px;
 }
+
