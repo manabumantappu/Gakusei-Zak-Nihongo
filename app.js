@@ -206,29 +206,14 @@ function simpanSiswa() {
   const level = document.getElementById("level").value;
   const target = document.getElementById("target").value;
 
-  localStorage.setItem("nama", nama);
-  localStorage.setItem("level", level);
-  localStorage.setItem("target", target);
-
-  // 🔥 INI YANG KURANG
-  updateDashboard();
+  //  SIMPAN DALAM 1 OBJECT
+  localStorage.setItem("siswa", JSON.stringify(siswa));
+ //  REFRESH DASHBOARD YANG BENAR
+  renderDashboard();
 
   alert("Data siswa berhasil disimpan");
 }
-// 🔽 TEMPEL DI app.js (di luar fungsi lain)
-function updateDashboard() {
-  document.getElementById("dashNama").textContent =
-    localStorage.getItem("nama") || "-";
 
-  document.getElementById("dashLevel").textContent =
-    localStorage.getItem("level") || "-";
-
-  document.getElementById("dashTarget").textContent =
-    localStorage.getItem("target") || "-";
-}
-document.addEventListener("DOMContentLoaded", function () {
-  updateDashboard();
-});
 
 /* =========================
    JADWAL BELAJAR
