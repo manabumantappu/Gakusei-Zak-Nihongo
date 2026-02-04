@@ -80,7 +80,7 @@ auth.onAuthStateChanged(async user => {
     document.body.classList.add(
       role === "guru" ? "role-guru" : "role-siswa"
     );
-
+    renderDashboard(); // 🔥 INI KUNCI TERAKHIR
     renderPengumuman();
     renderPDF();
     listenPengumumanboard();
@@ -177,7 +177,7 @@ const jadwalInput = document.getElementById("jadwalInput");
 const materiInput = document.getElementById("materiInput");
 const jenis = document.getElementById("jenis");
 
-const nama = document.getElementById("nama");
+const namaInput = document.getElementById("nama");
 const level = document.getElementById("level");
 const target = document.getElementById("target");
 
@@ -202,9 +202,11 @@ const progresText = document.getElementById("progresText");
    SISWA
 ========================= */
 function simpanSiswa() {
-  const nama = document.getElementById("nama").value;
-  const level = document.getElementById("level").value;
-  const target = document.getElementById("target").value;
+  const siswa = {
+    nama: document.getElementById("nama").value.trim(),
+    level: document.getElementById("level").value,
+    target: document.getElementById("target").value.trim()
+  };
  
   if (!siswa.nama) {
     alert("Nama siswa wajib diisi");
@@ -579,7 +581,7 @@ function tutupPopupPengumuman(){
 /* =========================
    INIT
 ========================= */
-renderDashboard();
+
 renderJadwal();
 renderMateri();
 renderKursus();
