@@ -374,17 +374,40 @@ function backupData(){
     pdf: JSON.parse(localStorage.getItem("pdf")) || []
   };
 
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: "application/json"
-  });
+  const json = JSON.stringify(data, null, 2);
 
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "backup-siswa-bahasa-jepang.json";
-  a.click();
-  URL.revokeObjectURL(url);
+  // 🔥 KHUSUS ANDROID WEBVIEW
+  const encoded = encodeURIComponent(json);
+  const url = "data:text/plain;charset=utf-8," + encoded;
+
+  // buka di browser / sistem
+  window.open(url, "_system");
 }
+function restoreFromText(){
+  const text = document.getElementById("restoreText").value;
+
+  if(!text){
+    alert("Tempel data backup JSON terlebih dahulu");
+    return;
+  }
+
+  try{
+    const data = JSON.parse(text);
+
+    localStorage.setItem("siswa", JSON.stringify(data.siswa || {}));
+    localStorage.setItem("jadwal", JSON.stringify(data.jadwal || []));
+    localStorage.setItem("materi", JSON.stringify(data.materi || []));
+    localStorage.setItem("kursus", JSON.stringify(data.kursus || []));
+    localStorage.setItem("pdf", JSON.stringify(data.pdf || []));
+
+    alert("✅ Restore berhasil");
+    location.reload();
+  }catch(e){
+    alert("❌ JSON tidak valid");
+  }
+}
+
+
 function restoreData(){
   const fileInput = document.getElementById("restoreFile");
   const file = fileInput.files[0];
