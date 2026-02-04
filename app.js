@@ -205,8 +205,7 @@ function simpanSiswa() {
   const nama = document.getElementById("nama").value;
   const level = document.getElementById("level").value;
   const target = document.getElementById("target").value;
- };
-
+ 
   if (!siswa.nama) {
     alert("Nama siswa wajib diisi");
     return;
