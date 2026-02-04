@@ -205,7 +205,12 @@ function simpanSiswa() {
   const nama = document.getElementById("nama").value;
   const level = document.getElementById("level").value;
   const target = document.getElementById("target").value;
+ };
 
+  if (!siswa.nama) {
+    alert("Nama siswa wajib diisi");
+    return;
+  }
   //  SIMPAN DALAM 1 OBJECT
   localStorage.setItem("siswa", JSON.stringify(siswa));
  //  REFRESH DASHBOARD YANG BENAR
@@ -414,6 +419,14 @@ function restoreData(){
 }
 
 function renderDashboard(){
+    // ⛔ dashboard belum ada di DOM
+  if (
+    !window.dashNama ||
+    !window.dashLevel ||
+    !window.dashTarget
+  ) {
+    return;
+  }
   /* === DATA SISWA === */
   const siswa = JSON.parse(localStorage.getItem("siswa")) || {};
   dashNama.innerText = siswa.nama || "-";
