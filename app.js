@@ -383,6 +383,33 @@ function backupData(){
   // buka di browser / sistem
   window.open(url, "_system");
 }
+
+function backupToFile(){
+  const data = {
+    siswa: JSON.parse(localStorage.getItem("siswa")),
+    jadwal: JSON.parse(localStorage.getItem("jadwal")) || [],
+    materi: JSON.parse(localStorage.getItem("materi")) || [],
+    kursus: JSON.parse(localStorage.getItem("kursus")) || [],
+    pdf: JSON.parse(localStorage.getItem("pdf")) || []
+  };
+
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type: "application/json" }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "backup-siswa-bahasa-jepang.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);
+}
+
 function restoreFromText(){
   const text = document.getElementById("restoreText").value;
 
@@ -604,7 +631,7 @@ function tutupPopupPengumuman(){
 /* =========================
    INIT
 ========================= */
-
+renderDashboard();   // 🔥 TAMBAHKAN INI
 renderJadwal();
 renderMateri();
 renderKursus();
