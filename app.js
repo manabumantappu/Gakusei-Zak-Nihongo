@@ -201,15 +201,34 @@ const progresText = document.getElementById("progresText");
 /* =========================
    SISWA
 ========================= */
-function simpanSiswa(){
-  const siswa = {
-    nama: nama.value,
-    level: level.value,
-    target: target.value
-  };
-  localStorage.setItem("siswa", JSON.stringify(siswa));
-  alert("✅ Data siswa tersimpan");
+function simpanSiswa() {
+  const nama = document.getElementById("nama").value;
+  const level = document.getElementById("level").value;
+  const target = document.getElementById("target").value;
+
+  localStorage.setItem("nama", nama);
+  localStorage.setItem("level", level);
+  localStorage.setItem("target", target);
+
+  // 🔥 INI YANG KURANG
+  updateDashboard();
+
+  alert("Data siswa berhasil disimpan");
 }
+// 🔽 TEMPEL DI app.js (di luar fungsi lain)
+function updateDashboard() {
+  document.getElementById("dashNama").textContent =
+    localStorage.getItem("nama") || "-";
+
+  document.getElementById("dashLevel").textContent =
+    localStorage.getItem("level") || "-";
+
+  document.getElementById("dashTarget").textContent =
+    localStorage.getItem("target") || "-";
+}
+document.addEventListener("DOMContentLoaded", function () {
+  updateDashboard();
+});
 
 /* =========================
    JADWAL BELAJAR
