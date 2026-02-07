@@ -178,26 +178,9 @@
   <h2>💾 Backup & Restore Data</h2>
 
 <button onclick="backupToFile()" style="margin-top:10px">
-  📄 Backup ke File JSON
+  📄 Backup ke File 
 </button>
-
-  <button onclick="backupData()">⬇️ Backup Data</button>
-
-  <!-- 🔽 (UNTUK HP) -->
-  <textarea id="restoreText"
-    placeholder="Tempel isi file backup JSON di sini"
-    rows="6"
-    style="width:100%;margin-top:10px"></textarea>
-
-  <button onclick="restoreFromText()" style="margin-top:10px">
-    ♻️ Restore Data (Tempel JSON)
-  </button>
-
-  <!-- Yang lama (desktop only) -->
-  <input type="file" id="restoreFile" accept=".json" style="margin-top:10px">
-  <button onclick="restoreData()">♻️ Restore Data</button>
-
-  <button onclick="restoreFromAndroid()" style="margin-top:10px">
+<button onclick="restoreFromAndroid()" style="margin-top:10px">
   📂 Restore dari File (HP)
 </button>
   
