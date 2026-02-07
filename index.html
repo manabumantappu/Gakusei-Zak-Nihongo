@@ -204,25 +204,27 @@
   // BACKUP (DESKTOP + ANDROID)
   // =========================
   function backupData() {
-  alert("backupData dipanggil");
+    alert("backupData dipanggil");
 
-  const json = JSON.stringify(localStorage);
-  alert(json);
+    const json = JSON.stringify(localStorage);
+    alert(json);
 
-  if (typeof Android !== "undefined") {
-    alert("ANDROID MODE");
-    Android.backup(json);
-    return;
-  }
+    // ANDROID
+    if (typeof Android !== "undefined") {
+      alert("ANDROID MODE");
+      Android.backup(json);
+      return;
+    }
 
-  alert("DESKTOP MODE");
-  const blob = new Blob([json], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "backup_siswa.json";
-  a.click();
-}
+    // DESKTOP
+    alert("DESKTOP MODE");
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "backup_siswa.json";
+    a.click();
 
     URL.revokeObjectURL(url);
   }
@@ -274,9 +276,6 @@
     }
   }
 </script>
-
-
-
  
  <div id="popupPengumuman" class="popup hide">
   <div class="popup-box">
