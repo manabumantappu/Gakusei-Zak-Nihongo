@@ -177,50 +177,101 @@
 <section class="card">
   <h2>💾 Backup & Restore Data</h2>
 
-<button
- <button onclick="backupData()" style="margin-top:10px">
-  📄 Backup ke File
-</button>
+  <button onclick="backupData()">
+    📄 Backup ke File
+  </button>
 
+  <button onclick="restoreFromAndroid()" style="margin-top:10px">
+    📂 Restore dari File (HP)
+  </button>
 
-<button onclick="restoreFromAndroid()" style="margin-top:10px">
-  📂 Restore dari File (HP)
-</button>
-  
+  <input
+    type="file"
+    accept=".json"
+    onchange="restoreFromFile(this)"
+    style="margin-top:10px"
+  >
+
   <p style="font-size:0.85em;color:#666">
-    Backup disimpan dalam file JSON.  
-    Restore akan mengganti semua data lama.
+    Desktop: gunakan file picker<br>
+    Android: gunakan tombol restore HP
   </p>
 </section>
+
   
 <script>
+  // =========================
+  // BACKUP (DESKTOP + ANDROID)
+  // =========================
   function backupData() {
-    if (typeof Android === "undefined") {
-      alert("Backup file hanya tersedia di aplikasi Android");
+    const json = JSON.stringify(localStorage);
+
+    // ANDROID
+    if (typeof Android !== "undefined") {
+      Android.backup(json);
       return;
     }
-    const json = JSON.stringify(localStorage);
-    Android.backup(json);
+
+    // DESKTOP
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "backup_siswa.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
   }
 
+  // =========================
+  // RESTORE (ANDROID)
+  // =========================
   function restoreFromAndroid() {
     if (typeof Android === "undefined") {
-      alert("Restore file hanya tersedia di aplikasi Android");
+      alert("Restore ini hanya untuk aplikasi Android");
       return;
     }
     Android.openRestorePicker();
   }
 
-  window.__restoreFromAndroid = function(json){
-    const data = JSON.parse(json);
-    localStorage.clear();
-    Object.keys(data).forEach(key => {
-      localStorage.setItem(key, data[key]);
-    });
-    alert("Restore berhasil");
-    location.reload();
+  // dipanggil dari Android
+  window.__restoreFromAndroid = function (json) {
+    restoreFromJson(json);
+  };
+
+  // =========================
+  // RESTORE (DESKTOP)
+  // =========================
+  function restoreFromFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      restoreFromJson(e.target.result);
+    };
+    reader.readAsText(file);
+  }
+
+  // =========================
+  // RESTORE CORE
+  // =========================
+  function restoreFromJson(json) {
+    try {
+      const data = JSON.parse(json);
+      localStorage.clear();
+      Object.keys(data).forEach(key => {
+        localStorage.setItem(key, data[key]);
+      });
+      alert("Restore berhasil");
+      location.reload();
+    } catch (e) {
+      alert("File backup tidak valid");
+    }
   }
 </script>
+
 
 
  
