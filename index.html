@@ -203,32 +203,30 @@
   // =========================
   // BACKUP (DESKTOP + ANDROID)
   // =========================
-  function backupData() {
-    alert("backupData dipanggil");
+ function backupData() {
+  const json = JSON.stringify(localStorage);
 
-    const json = JSON.stringify(localStorage);
-    alert(json);
-
-    // ANDROID
-    if (typeof Android !== "undefined") {
-      alert("ANDROID MODE");
-      Android.backup(json);
-      return;
-    }
-
-    // DESKTOP
-    alert("DESKTOP MODE");
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "backup_siswa.json";
-    a.click();
-
-    URL.revokeObjectURL(url);
+  // ANDROID
+  if (typeof Android !== "undefined") {
+    Android.backup(json);
+    return;
   }
 
+  // DESKTOP (FIX about:blank)
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "backup_siswa.json";
+  a.style.display = "none";
+
+  document.body.appendChild(a);   // 🔑 WAJIB
+  a.click();
+  document.body.removeChild(a);   // 🔑 WAJIB
+
+  setTimeout(() => URL.revokeObjectURL(url), 100);
+}
   // =========================
   // RESTORE (ANDROID)
   // =========================
