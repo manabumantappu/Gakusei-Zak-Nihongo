@@ -204,22 +204,25 @@
   // BACKUP (DESKTOP + ANDROID)
   // =========================
   function backupData() {
-    const json = JSON.stringify(localStorage);
+  alert("backupData dipanggil");
 
-    // ANDROID
-    if (typeof Android !== "undefined") {
-      Android.backup(json);
-      return;
-    }
+  const json = JSON.stringify(localStorage);
+  alert(json);
 
-    // DESKTOP
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
+  if (typeof Android !== "undefined") {
+    alert("ANDROID MODE");
+    Android.backup(json);
+    return;
+  }
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "backup_siswa.json";
-    a.click();
+  alert("DESKTOP MODE");
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "backup_siswa.json";
+  a.click();
+}
 
     URL.revokeObjectURL(url);
   }
