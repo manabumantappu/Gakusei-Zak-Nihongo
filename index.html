@@ -173,11 +173,10 @@
   </div>
 </section>
 
-
-   
+ 
 <section class="card">
   <h2>💾 Backup & Restore Data</h2>
-  
+
 <button onclick="backupToFile()" style="margin-top:10px">
   📄 Backup ke File JSON
 </button>
@@ -198,12 +197,47 @@
   <input type="file" id="restoreFile" accept=".json" style="margin-top:10px">
   <button onclick="restoreData()">♻️ Restore Data</button>
 
+  <button onclick="restoreFromAndroid()" style="margin-top:10px">
+  📂 Restore dari File (HP)
+</button>
+  
   <p style="font-size:0.85em;color:#666">
     Backup disimpan dalam file JSON.  
     Restore akan mengganti semua data lama.
   </p>
 </section>
   
+<script>
+  function backupData() {
+    if (typeof Android === "undefined") {
+      alert("Backup file hanya tersedia di aplikasi Android");
+      return;
+    }
+    const json = JSON.stringify(localStorage);
+    Android.backup(json);
+  }
+
+  function restoreFromAndroid() {
+    if (typeof Android === "undefined") {
+      alert("Restore file hanya tersedia di aplikasi Android");
+      return;
+    }
+    Android.openRestorePicker();
+  }
+
+  window.__restoreFromAndroid = function(json){
+    const data = JSON.parse(json);
+    localStorage.clear();
+    Object.keys(data).forEach(key => {
+      localStorage.setItem(key, data[key]);
+    });
+    alert("Restore berhasil");
+    location.reload();
+  }
+</script>
+
+
+ 
  <div id="popupPengumuman" class="popup hide">
   <div class="popup-box">
 
